@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sale_order_form_view_inherit_workflow_button" model="ir.ui.view">
+        <field name="name">sale.order.auto.work.flow</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <button name="action_confirm" position="after">
+                <button name="action_auto_confirm" string="Auto Confirm"
+                    class="btn-primary" type="object"
+                    attrs="{'invisible': [('state', 'not in', ['sent'])]}"/>
+                <button name="action_auto_confirm" string="Auto Confirm"
+                    type="object" attrs="{'invisible': [('state', 'not in', ['draft'])]}"/>
+            </button>
+        </field>
+    </record>
+
+    <record id="stock_warehouse_sales_auto_work_flow" model="ir.ui.view">
+        <field name="name">sale.order.auto.work.flow</field>
+        <field name="model">stock.warehouse</field>
+        <field name="inherit_id" ref="stock.view_warehouse"/>
+        <field name="arch" type="xml">
+            <field name="code" position="after">
+                <field name="is_validate_picking"/>
+                <field name="is_create_invoice"/>
+                <field name="is_validate_invoice" attrs="{'invisible': [('is_create_invoice', '=', False)]}"/>
+                <field name="is_register_payment" attrs="{'invisible': [('is_validate_invoice', '=', False)]}"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
